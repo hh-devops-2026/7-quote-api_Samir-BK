@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
     push:
@@ -23,13 +23,3 @@ jobs:
               run: npm run lint
             - name: Run test
               run: npm test
-    deploy:
-        needs: build
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Trigger Render deploy
-              env:
-                RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK}}
-              run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK"
